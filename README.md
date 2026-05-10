@@ -14,7 +14,7 @@ Rather than relying on opinion or trend articles, this analysis goes directly to
 
 ## Project Architecture
 
-![Project Architecture](https://drive.google.com/file/d/1N66rpfDR9LHvtdMyykE94sXfpiykZYoL/view?usp=sharing)
+![Project Architecture](images/architecture.png)
 
 The pipeline is straightforward: a DuckDB OLAP engine hosted on MotherDuck serves as the data warehouse, three SQL scripts each answer a distinct business question, and the results are interpreted as actionable data insights.
 
@@ -22,7 +22,7 @@ The pipeline is straightforward: a DuckDB OLAP engine hosted on MotherDuck serve
 
 ## Data Warehouse Schema
 
-![Data Warehouse Schema](https://drive.google.com/file/d/1CtcLhtSbvTkNQ4H4JfvgPVQ86GweMcrp/view?usp=sharing)
+![Data Warehouse Schema](images/data_warehouse.png)
 
 The schema follows a **star schema** pattern:
 
@@ -35,12 +35,12 @@ The schema follows a **star schema** pattern:
 
 ## Tech Stack
 
-| Tool           | Role                                                                    |
-| -------------- | ----------------------------------------------------------------------- |
-| **DuckDB**     | OLAP query engine — columnar storage optimized for analytical workloads |
-| **MotherDuck** | Cloud-hosted DuckDB — serverless, no infrastructure required            |
-| **SQL**        | Primary analysis language                                               |
-| **VS Code**    | Development environment                                                 |
+| Tool | Role |
+|------|------|
+| **DuckDB** | OLAP query engine — columnar storage optimized for analytical workloads |
+| **MotherDuck** | Cloud-hosted DuckDB — serverless, no infrastructure required |
+| **SQL** | Primary analysis language |
+| **VS Code** | Development environment |
 
 ### Key SQL Techniques Used
 
@@ -78,14 +78,13 @@ The project is divided into three SQL queries, each answering a different strate
 
 ### Query 1 — Top In-Demand Skills
 
-> _"What skills appear most frequently in remote Data Engineer job postings?"_
+> *"What skills appear most frequently in remote Data Engineer job postings?"*
 
 **Focus:** Raw demand volume. Identifies the skills you need just to get past screening.
 
-![Top Demanded Skills](https://drive.google.com/file/d/1uzLpFKuqpL_qIQpio0V8bxUEi1LrZ7da/view?usp=sharing)
+![Top Demanded Skills](images/viz_demand.png)
 
 **Key findings:**
-
 - SQL and Python are near-identical in demand (~29K postings each) — both are non-negotiable baseline requirements
 - AWS leads cloud platforms with nearly 3× more demand than GCP
 - Airflow and Spark dominate the pipeline/processing layer
@@ -95,14 +94,13 @@ The project is divided into three SQL queries, each answering a different strate
 
 ### Query 2 — Highest-Paying Skills
 
-> _"Which skills are associated with the highest median salary in remote Data Engineer roles?"_
+> *"Which skills are associated with the highest median salary in remote Data Engineer roles?"*
 
 **Focus:** Salary ceiling. Identifies premium skills that command top compensation.
 
-![Highest Paying Skills](https://drive.google.com/file/d/1_KqvpUmSG_FNYaK17psKkKjz00IeDrIi/view?usp=sharing)
+![Highest Paying Skills](images/viz_salary.png)
 
 **Key findings:**
-
 - Rust tops the list at $210K median — rare but exceptional compensation for systems-level pipeline work
 - Terraform and Golang both sit at $184K, reflecting infrastructure and platform engineering demand
 - GDPR at $169K is the surprising outlier — compliance engineering commands technical-level pay
@@ -112,7 +110,7 @@ The project is divided into three SQL queries, each answering a different strate
 
 ### Query 3 — Optimal Skills (Demand × Salary Balance)
 
-> _"Which skills offer the best combination of market demand and compensation?"_
+> *"Which skills offer the best combination of market demand and compensation?"*
 
 **Focus:** Return on investment. Avoids skills that are either too niche or too commoditized.
 
@@ -122,10 +120,9 @@ Uses LN-weighted scoring:
 optimal_score = LN(demand_count) × median_salary / 1_000_000
 ```
 
-![Optimal Skills](https://drive.google.com/file/d/13odDuOqY2emjEBQ3YspV5IrkzgWfXOG6/view?usp=sharing)
+![Optimal Skills](images/viz_optimal.png)
 
 **Key findings:**
-
 - Terraform ranks #1 despite only 193 postings — its $184K median is strong enough that `LN(193) × 184,000` beats `LN(1133) × 135,000` (Python)
 - Python and SQL are neck-and-neck at scores 0.95 and 0.91 — both are safe bets
 - Airflow and Spark appear in the top 6 — strong demand AND above-average salary
@@ -135,13 +132,13 @@ optimal_score = LN(demand_count) × median_salary / 1_000_000
 
 ## Key Takeaways
 
-| Priority             | Skills            | Rationale                              |
-| -------------------- | ----------------- | -------------------------------------- |
-| Must-have foundation | SQL, Python       | Required in virtually every posting    |
-| Cloud platform       | AWS (then Azure)  | Higher salary ceiling + broader demand |
-| Pipeline tools       | Airflow + Spark   | Strong demand and above-average pay    |
-| Salary multiplier    | Terraform         | Highest ROI per skill — $184K median   |
-| Stretch goal         | Kafka, Kubernetes | Growing demand in modern data infra    |
+| Priority | Skills | Rationale |
+|----------|--------|-----------|
+| Must-have foundation | SQL, Python | Required in virtually every posting |
+| Cloud platform | AWS (then Azure) | Higher salary ceiling + broader demand |
+| Pipeline tools | Airflow + Spark | Strong demand and above-average pay |
+| Salary multiplier | Terraform | Highest ROI per skill — $184K median |
+| Stretch goal | Kafka, Kubernetes | Growing demand in modern data infra |
 
 ---
 
