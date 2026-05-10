@@ -157,10 +157,9 @@ Stage 3 (negotiate salary) →  Terraform + Kafka or Kubernetes
 ```
 data-engineer-job-market-analysis/
 │
-├── queries/
-│   ├── 01_top_demanded_skills.sql
-│   ├── 02_top_paying_skills.sql
-│   └── 03_optimal_skills.sql
+├── 01_top_demanded_skills.sql
+├── 02_top_paying_skills.sql
+├── 03_optimal_skills.sql
 │
 ├── images/
 │   ├── architecture.png
